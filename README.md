@@ -8,7 +8,7 @@ Training is done through imitation learning and evolution strategy.
 The training process has three steps: sample generation, behavior cloning(bc), and evolution strategy(es).
 
 
-###Instruction:
+### Instruction:
 
 1. Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
 
@@ -26,7 +26,7 @@ When training, the file `bc/trained_models/$BENCHMARK/best_params.pkl` will be g
 
 4. Improve the agent using evolution strategy
 `python es/src/main.py BENCHMARK`
-Currently, the evolution strategy has some bugs. I will fix them as soon as possible.
+Please make sure that there exists the model parameters file `bc/trained_models/$BENCHMARK/best_params.pkl` before running es.
 
 6. Evaluate
 To evaluate the results, copy the trained models (`bc/trained_models/$BENCHMARK/best_params.pkl`) into the `agents` directory, which imitates the final submission format. 

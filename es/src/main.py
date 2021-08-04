@@ -9,7 +9,7 @@ from es.algorithm.trainer import Trainer
 
 
 if __name__ == "__main__":
-    print(sys.path)
+
     # parser = argparse.ArgumentParser()
     # parser.add_argument(
     #     'problem',
@@ -36,11 +36,14 @@ if __name__ == "__main__":
 
     ray.init()
 
-    policy_path = '../../bc/trained_models/item_placement/best_params.pkl'
-    instances_valid = glob.glob('../instances/1_item_placement/valid/*.mps.gz')
+    DIR = os.path.abspath(os.path.dirname(os.path.dirname(os.path.dirname(__file__))))
+    policy_path = os.path.join(DIR, 'bc/trained_models/item_placement/best_params.pkl')
+    instance_path = os.path.join(DIR, 'instances/1_item_placement/valid/*.mps.gz')
+    instances_valid = glob.glob(instance_path)
+
     from es.model.brancher_policy import BrancherPolicy as Policy
 
-    trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=1, num_workers=1,
-                      step_size=0.1, count=10,
+    trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=1, num_workers=3,
+                      step_size=0.1, count=10000000,
                       min_task_runtime=100000)
     trainer.train(epochs=1, min_evaluations=10, noise_std=0.1)

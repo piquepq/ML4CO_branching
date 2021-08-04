@@ -4,10 +4,14 @@ import torch_geometric
 import numpy as np
 import json
 import ecole
+from pathlib import Path
 
 from torch.nn.utils import parameters_to_vector, vector_to_parameters
 
 from es.algorithm.solution import Solution
+from common.environments import Branching as Environment
+from common.rewards import TimeLimitDualIntegral as BoundIntegral
+from es.config.config import EVAL_TIME_LIMT
 
 
 class PreNormException(Exception):
@@ -245,22 +249,16 @@ class BrancherPolicy(Solution):
         # self.model.load_state_dict(checkpoint['policy'])
 
     def evaluate(self, instance):
-        from common.environments import Branching as Environment
-        from common.rewards import TimeLimitDualIntegral as BoundIntegral
-        time_limit = 15*60
-
-        policy = self.model
         observation_function = ecole.observation.NodeBipartite()
-
         integral_function = BoundIntegral()
-
         env = Environment(
-            time_limit=time_limit,
+            time_limit=EVAL_TIME_LIMT,
             observation_function=observation_function,
             reward_function=-integral_function,  # negated integral (minimization)
         )
 
         # read the instance's initial primal and dual bounds from JSON file
+        instance = Path(instance)
         with open(instance.with_name(instance.stem).with_suffix('.json')) as f:
             instance_info = json.load(f)
 
@@ -274,28 +272,39 @@ class BrancherPolicy(Solution):
                 initial_dual_bound=initial_dual_bound,
                 objective_offset=objective_offset)
 
-        print()
-        print(f"Instance {instance.name}")
-        print(f"  initial primal bound: {initial_primal_bound}")
-        print(f"  initial dual bound: {initial_dual_bound}")
-        print(f"  objective offset: {objective_offset}")
-
         # reset the environment
         observation, action_set, reward, done, info = env.reset(str(instance), objective_limit=initial_primal_bound)
-
         cumulated_reward = 0  # discard initial reward
 
         # loop over the environment
         while not done:
-            action = policy(action_set, observation)
+            action = self.make_action(action_set, observation)
             observation, action_set, reward, done, info = env.step(action)
             cumulated_reward += reward
 
-        print(f"  cumulated reward (to be maximized): {cumulated_reward}")
-
+        # print(f"  cumulated reward (to be maximized): {cumulated_reward}")
         score = cumulated_reward
         episodes = 1
         transitions = 1
         return score, episodes, transitions
+
+    def make_action(self, action_set, observation):
+        # mask variable features (no incumbent info)
+        variable_features = observation.column_features
+        variable_features = np.delete(variable_features, 14, axis=1)
+        variable_features = np.delete(variable_features, 13, axis=1)
+
+        constraint_features = torch.FloatTensor(observation.row_features)
+        edge_index = torch.LongTensor(observation.edge_features.indices.astype(np.int64))
+        edge_attr = torch.FloatTensor(np.expand_dims(observation.edge_features.values, axis=-1))
+        variable_features = torch.FloatTensor(variable_features)
+        action_set = torch.LongTensor(np.array(action_set, dtype=np.int64))
+
+        logits = self.model(constraint_features, edge_index, edge_attr, variable_features)
+        logits = logits[action_set]
+        action_idx = logits.argmax().item()
+        action = action_set[action_idx]
+
+        return action
 
 
