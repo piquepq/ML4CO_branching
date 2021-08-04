@@ -1,9 +1,9 @@
-#  Dual task
+#  ML4CO - dual task
 
 Code maintainer： Wentao Zhao (wz2543@columbia.edu)
 
-This code combines the baseline model and Abhi's research code. 
-A Graph Neural Network model that chooses which variable to branch on. 
+This code combines the baseline model and Abhi's research code. Please do not distribute the code.
+We apply a new graph convolutional neural network model for learning branch-and-bound variable selection policies.
 Training is done through imitation learning and evolution strategy. 
 The training process has three steps: sample generation, behavior cloning(bc), and evolution strategy(es).
 
