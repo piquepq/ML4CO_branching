@@ -8,7 +8,7 @@ Training is done through imitation learning and evolution strategy.
 The training process has three steps: sample generation, behavior cloning(bc), and evolution strategy(es).
 
 
-###Instruction:
+###  Instruction:
 
 1. Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
 
