@@ -25,7 +25,7 @@ Optional arguments:
 When training, the file `bc/trained_models/$BENCHMARK/best_params.pkl` will be generated.
 
 4. Improve the agent using evolution strategy
-`python es/src/main.py BENCHMARK`
+Currently, you have to use Pycharm to run the code. It is because that it can add content root dir to worker process. 
 Please make sure that there exists the model parameters file `bc/trained_models/$BENCHMARK/best_params.pkl` before running es.
 
 6. Evaluate

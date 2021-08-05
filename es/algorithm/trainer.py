@@ -10,6 +10,7 @@ from es.algorithm.optimizer import Adam
 from es.algorithm.worker import Worker
 from es.algorithm.utils import compute_centered_ranks
 from es.algorithm.subworker import Subworker
+from es.config.config import ROLL_OUT_TIMES
 
 
 class Trainer:
@@ -77,7 +78,7 @@ class Trainer:
                 subworkers.append(subworker)
                 workers.append(worker)
 
-            rollout_ids = [worker.evaluate.remote(params=theta_id) for worker in workers[0:1]]+[worker.do_rollouts.remote(params=theta_id, noise_std=noise_std, n=50) for worker in workers[1:]]
+            rollout_ids = [worker.evaluate.remote(params=theta_id) for worker in workers[0:1]]+[worker.do_rollouts.remote(params=theta_id, noise_std=noise_std, n=ROLL_OUT_TIMES) for worker in workers[1:]]
             results = ray.get(rollout_ids)
 
             # EVALUATE
