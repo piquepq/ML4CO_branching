@@ -9,6 +9,7 @@ The training process has three steps: sample generation, behavior cloning(bc), a
 
 
 ### Instruction:
+0. If your computer does not have GPU, use the conda.yaml in the baseline model and install pytorch and ray by yourself.
 
 1. Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
 
