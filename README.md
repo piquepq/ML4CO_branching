@@ -9,31 +9,38 @@ The training process has three steps: sample generation, behavior cloning(bc), a
 
 
 ### Instruction:
-0. If your computer does not have GPU, use the conda.yaml in the baseline model and install pytorch and ray by yourself.
+####  Clone this repository
+```bash
+git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
+cd ml4co_dual_task
+```
+Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
 
-1. Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
 
-2. Generate samp
+#### Set-up your Python dependencies
+```bash
+source init.sh
+```
 
+#### Generate sample
 `python bc/01_generate_dataset.py BENCHMARK`
 Optional arguments:
 `-s SEED`: random seed used to initialize the pseudo-random number generator
 `-j NJOBS`: number of parallel sample-generation jobs.
 
-3. Train the agent using behavior cloning
 
+#### run behavior cloning
 `python bc/02_train.py BENCHMARK`
 `-s SEED`: random seed used to initialize the pseudo-random number generator
 `-g GPU`: CUDA GPU id (or -1 for CPU only)
 When training, the file `bc/trained_models/$BENCHMARK/best_params.pkl` will be generated.
 
-4. Improve the agent using evolution strategy
 
-Currently, you have to use Pycharm to run the code. It is because that it can add content root dir to worker process. 
-Please make sure that there exists the model parameters file `bc/trained_models/$BENCHMARK/best_params.pkl` before running es.
+#### run evolution strategy
+`python es/src/main.py BENCHMARK`
 
-6. Evaluate
 
+#### Evaluate
 To evaluate the results, copy the trained models (`bc/trained_models/$BENCHMARK/best_params.pkl`) into the `agents` directory, which imitates the final submission format. 
 Follow the evaluation pipeline instructions to evaluate the generated parameters.
 
