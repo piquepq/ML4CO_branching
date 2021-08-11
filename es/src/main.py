@@ -4,8 +4,10 @@ import ray
 import glob
 import argparse
 
+from bc.utilities import log
 from es.model.brancher_policy import BrancherPolicy as Policy
 from es.algorithm.trainer import Trainer
+from es.config.config import NUM_WORKER, STEP_SIZE, EPOCHS, MIN_EVAL, NOISE_STD, SEED
 
 
 if __name__ == "__main__":
@@ -39,8 +41,21 @@ if __name__ == "__main__":
     instances_path = os.path.join(DIR, instances_path)
     instances_valid = glob.glob(instances_path)
 
+    # set up log
+    run_dir = os.path.dirname(policy_path)
+    logfile = os.path.join(run_dir, 'es_train_log.txt')
+    if os.path.exists(logfile):
+        os.remove(logfile)
+
+    log(f"max_epochs: {EPOCHS}", logfile)
+    log(f"num_workers: {NUM_WORKER}", logfile)
+    log(f"step_size: {STEP_SIZE}", logfile)
+    log(f"min_evaluations: {MIN_EVAL}", logfile)
+    log(f"noise_std: {NOISE_STD}", logfile)
+    log(f"seed {SEED}", logfile)
+
     ray.init()
-    trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=1, num_workers=3,
-                      step_size=0.1, count=10000000,
-                      min_task_runtime=100000)
-    trainer.train(epochs=1, min_evaluations=10, noise_std=0.1)
+    trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=SEED, num_workers=NUM_WORKER,
+                      step_size=STEP_SIZE, count=10000000,
+                      min_task_runtime=100000, logfile=logfile)
+    trainer.train(epochs=EPOCHS, min_evaluations=MIN_EVAL, noise_std=NOISE_STD)

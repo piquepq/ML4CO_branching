@@ -175,7 +175,7 @@ if __name__ == "__main__":
     torch.manual_seed(args.seed)
 
     # logging setup
-    logfile = os.path.join(running_dir, 'train_log.txt')
+    logfile = os.path.join(running_dir, 'bc_train_log.txt')
     if os.path.exists(logfile):
         os.remove(logfile)
 

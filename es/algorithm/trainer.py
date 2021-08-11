@@ -10,12 +10,15 @@ from es.algorithm.optimizer import Adam
 from es.algorithm.worker import Worker
 from es.algorithm.utils import compute_centered_ranks
 from es.algorithm.subworker import Subworker
+
+from bc.utilities import log
 from es.config.config import ROLL_OUT_TIMES
+from es.config.config import NUM_INSTNACES
 
 
 class Trainer:
     
-    def __init__(self, Policy, policy_path, instances, seed=1, num_workers=10, step_size=0.01, count=100, min_task_runtime=0.02):
+    def __init__(self, Policy, policy_path, instances, seed=1, num_workers=10, step_size=0.01, count=100, min_task_runtime=0.02, logfile=None):
         self.Policy = Policy
         self.solution = self.Policy()
         self.solution_path = policy_path
@@ -32,7 +35,7 @@ class Trainer:
         rng = np.random.RandomState(seed)
         self.worker_seeds = rng.randint(0, 100000000, size=num_workers)
         
-        self.instances = instances[:2]  # make it 100 later
+        self.instances = instances[:NUM_INSTNACES]  # make it 100 later
         self.min_task_runtime = min_task_runtime
      
         # bookkeeping
@@ -40,13 +43,14 @@ class Trainer:
         self.reward_list = 0
         self.t0 = time.time()
         self.best_score = float("inf")
+        self.logfile = logfile
 
     def train(self, epochs=100, min_evaluations=10, noise_std=0.01):
         for e in range(epochs):
             # current solution 
             theta = self.solution.get_params()
             theta_id = ray.put(theta)
-
+            log(f"EPOCH {e}...", self.logfile)
             self.step(theta_id=theta_id, min_evaluations=min_evaluations, noise_std=noise_std)
 
     def step(self, theta_id, min_evaluations, noise_std):
@@ -83,9 +87,11 @@ class Trainer:
 
             # EVALUATE
             score, _, _ = results[0]
-            print("currrent solution score: ", np.mean(score))
+            log(f"Currrent solution score: {np.mean(score)}", self.logfile)
+            # print("currrent solution score: ", np.mean(score))
             # we want to maximize the score
             if np.mean(score) > self.best_score:
+                log(f"  best model so far", self.logfile)
                 self.best_score = np.mean(score)
                 self.solution.save(path=self.solution_path, verbose=True)
                 for subworker in subworkers:
@@ -129,7 +135,8 @@ class Trainer:
         self.episodes_so_far += num_episodes
 
         tf = time.time()
-        print("%d rollouts (%.3f), min_score: %d, max_score: %d, average_score: %.2f, std_scores: %.2f" % (num_episodes, tf-t0, _min, _max, _mean, _std))
+        log(f"{num_episodes} rollouts, min_score: {_min}, max_score: {_max}, average_score: {_mean}, std_scores: {_std}", self.logfile)
+        # print("%d rollouts (%.3f), min_score: %d, max_score: %d, average_score: %.2f, std_scores: %.2f" % (num_episodes, tf-t0, _min, _max, _mean, _std))
         # print("%d rollouts (%.3f)" % (num_episodes, tf-t0), end="")
         # print("min", _min, "max", _max, "mean", _mean)
 
