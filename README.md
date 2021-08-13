@@ -8,7 +8,7 @@ Training is done through imitation learning and evolution strategy.
 The training process has three steps: sample generation, behavior cloning(bc), and evolution strategy(es).
 
 
-### Set up env for MacOS user
+## Set up env for MacOS user
 ####  Clone this repository
 ```bash
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
@@ -38,7 +38,7 @@ pip install "ray[default]"
 pip install -e .
 ```
 
-### Set up env for Linux User
+## Set up env for Linux User
 ####  Clone this repository
 ```bash
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
