@@ -324,22 +324,30 @@ if __name__ == '__main__':
 
     # get instances
     if args.problem == 'item_placement':
-        instances_train = glob.glob('../instances/1_item_placement/train/*.mps.gz')
-        instances_valid = glob.glob('../instances/1_item_placement/valid/*.mps.gz')
-        out_dir = 'samples/1_item_placement'
+        instances_train_path = 'instances/1_item_placement/train/*.mps.gz'
+        instances_valid_path = 'instances/1_item_placement/valid/*.mps.gz'
+        out_dir = 'bc/samples/1_item_placement'
 
     elif args.problem == 'load_balancing':
-        instances_train = glob.glob('../instances/2_load_balancing/train/*.mps.gz')
-        instances_valid = glob.glob('../instances/2_load_balancing/valid/*.mps.gz')
-        out_dir = 'samples/2_load_balancing'
+        instances_train_path = 'instances/2_load_balancing/train/*.mps.gz'
+        instances_valid_path = 'instances/2_load_balancing/valid/*.mps.gz'
+        out_dir = 'bc/samples/2_load_balancing'
 
     elif args.problem == 'anonymous':
-        instances_train = glob.glob('../instances/3_anonymous/train/*.mps.gz')
-        instances_valid = glob.glob('../instances/3_anonymous/valid/*.mps.gz')
-        out_dir = 'samples/3_anonymous'
+        instances_train_path = 'instances/3_anonymous/train/*.mps.gz'
+        instances_valid_path = 'instances/3_anonymous/valid/*.mps.gz'
+        out_dir = 'bc/samples/3_anonymous'
 
     else:
         raise NotImplementedError
+
+    # setup the path
+    DIR = os.path.dirname(os.path.dirname(__file__))
+    instances_train_path = os.path.join(DIR, instances_train_path)
+    instances_valid_path = os.path.join(DIR, instances_valid_path)
+    out_dir = os.path.join(DIR, out_dir)
+    instances_train = glob.glob(instances_train_path)
+    instances_valid = glob.glob(instances_valid_path)
 
     print(f"{len(instances_train)} train instances for {train_size} samples")
     print(f"{len(instances_valid)} validation instances for {valid_size} samples")

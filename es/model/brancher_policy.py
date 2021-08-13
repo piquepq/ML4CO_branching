@@ -254,7 +254,7 @@ class BrancherPolicy(Solution):
         env = Environment(
             time_limit=EVAL_TIME_LIMT,
             observation_function=observation_function,
-            reward_function=-integral_function,  # negated integral (minimization)
+            reward_function=-integral_function,  # negated integral
         )
 
         # read the instance's initial primal and dual bounds from JSON file

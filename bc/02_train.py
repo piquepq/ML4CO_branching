@@ -122,7 +122,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # hyper parameters
-    max_epochs = 1000
+    max_epochs = 10
     batch_size = 12
     pretrain_batch_size = 128
     valid_batch_size = 128
@@ -131,22 +131,30 @@ if __name__ == "__main__":
 
     # get sample directory
     if args.problem == 'item_placement':
-        train_files = glob.glob('samples/1_item_placement/train/sample_*.pkl')
-        valid_files = glob.glob('samples/1_item_placement/valid/sample_*.pkl')
-        running_dir = 'trained_models/item_placement'
+        train_files_path = 'bc/samples/1_item_placement/train/sample_*.pkl'
+        valid_files_path = 'bc/samples/1_item_placement/valid/sample_*.pkl'
+        running_dir = 'bc/trained_models/item_placement'
 
     elif args.problem == 'load_balancing':
-        train_files = glob.glob('samples/2_load_balancing/train/sample_*.pkl')
-        valid_files = glob.glob('samples/2_load_balancing/valid/sample_*.pkl')
-        running_dir = 'trained_models/load_balancing'
+        train_files_path = 'bc/samples/2_load_balancing/train/sample_*.pkl'
+        valid_files_path = 'bc/samples/2_load_balancing/valid/sample_*.pkl'
+        running_dir = 'bc/trained_models/load_balancing'
 
     elif args.problem == 'anonymous':
-        train_files = glob.glob('samples/3_anonymous/train/sample_*.pkl')
-        valid_files = glob.glob('samples/3_anonymous/valid/sample_*.pkl')
-        running_dir = 'trained_models/anonymous'
+        train_files_path = 'bc/samples/3_anonymous/train/sample_*.pkl'
+        valid_files_path = 'bc/samples/3_anonymous/valid/sample_*.pkl'
+        running_dir = 'bc/trained_models/anonymous'
 
     else:
         raise NotImplementedError
+
+    # set up the dir
+    DIR = os.path.dirname(os.path.dirname(__file__))
+    train_files_path = os.path.join(DIR, train_files_path)
+    valid_files_path = os.path.join(DIR, valid_files_path)
+    running_dir = os.path.join(DIR, running_dir)
+    train_files = glob.glob(train_files_path)
+    valid_files = glob.glob(valid_files_path)
 
     pretrain_files = [f for i, f in enumerate(train_files) if i % 10 == 0]
 
