@@ -34,7 +34,6 @@ pip install "ray[default]"
 ```
 
 #### Install packages
-# install package
 ```bash
 pip install -e .
 ```
