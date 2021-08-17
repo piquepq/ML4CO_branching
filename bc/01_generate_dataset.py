@@ -319,8 +319,8 @@ if __name__ == '__main__':
     # parameters
     node_record_prob = 0.05  # probability of running the expert strategy and collecting samples.
     time_limit = 3600  # time limit for solving each instance
-    train_size = 100  # number of samples of each type
-    valid_size = 20
+    train_size = 100000  # number of samples of each type
+    valid_size = 20000
 
     # get instances
     if args.problem == 'item_placement':

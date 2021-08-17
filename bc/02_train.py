@@ -4,6 +4,7 @@ import glob
 import argparse
 import pathlib
 import numpy as np
+import wandb
 
 
 def pretrain(policy, pretrain_loader):
@@ -122,12 +123,21 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # hyper parameters
-    max_epochs = 10
-    batch_size = 12
-    pretrain_batch_size = 128
-    valid_batch_size = 128
+    max_epochs = 1
+    batch_size = 4
+    pretrain_batch_size = 8
+    valid_batch_size = 8
     lr = 1e-3
     top_k = [1, 3, 5, 10]
+
+    # initialize wandb
+    wandb.init(project='ml4co-dual', entity='ml4co')
+    wandb.config.max_epochs = max_epochs
+    wandb.config.batch_size = batch_size
+    wandb.config.pretrain_batch_size = pretrain_batch_size
+    wandb.config.valid_batch_size = valid_batch_size
+    wandb.config.lr = lr
+    wandb.config.top_k = top_k
 
     # get sample directory
     if args.problem == 'item_placement':
@@ -219,10 +229,12 @@ if __name__ == "__main__":
             train_loader = torch_geometric.data.DataLoader(train_data, batch_size, shuffle=True)
             train_loss, train_kacc = process(policy, train_loader, top_k, optimizer)
             log(f"TRAIN LOSS: {train_loss:0.3f} " + "".join([f" acc@{k}: {acc:0.3f}" for k, acc in zip(top_k, train_kacc)]), logfile)
+            wandb.log({"train_loss": train_loss})
 
         # validate
         valid_loss, valid_kacc = process(policy, valid_loader, top_k, None)
         log(f"VALID LOSS: {valid_loss:0.3f} " + "".join([f" acc@{k}: {acc:0.3f}" for k, acc in zip(top_k, valid_kacc)]), logfile)
+        wandb.log({"valid_loss": valid_loss})
 
         scheduler.step(valid_loss)
         if scheduler.num_bad_epochs == 0:
