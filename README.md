@@ -14,7 +14,10 @@ The training process has three steps: sample generation, behavior cloning(bc), a
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 cd ml4co_dual_task
 ```
-Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
+Download the training instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view), and extract the archive at the root of this repo
+```bash
+tar -xzf instances.tar.gz
+```
 
 #### Set-up your Python dependencies
 ```bash
@@ -44,7 +47,11 @@ pip install -e .
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 cd ml4co_dual_task
 ```
-Make sure instances are available on `instances`. You can download the instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view).
+
+Download the training instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view), and extract the archive at the root of this repo
+```bash
+tar -xzf instances.tar.gz
+```
 
 #### Set-up your Python dependencies
 ```bash
