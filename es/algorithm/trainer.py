@@ -4,6 +4,7 @@ import numpy as np
 import ray
 import os
 import sys
+import wandb
 
 from es.algorithm.noise import create_shared_noise, SharedNoiseTable
 from es.algorithm.optimizer import Adam
@@ -51,9 +52,9 @@ class Trainer:
             theta = self.solution.get_params()
             theta_id = ray.put(theta)
             log(f"EPOCH {e}...", self.logfile)
-            self.step(theta_id=theta_id, min_evaluations=min_evaluations, noise_std=noise_std)
+            self.step(e, theta_id=theta_id, min_evaluations=min_evaluations, noise_std=noise_std)
 
-    def step(self, theta_id, min_evaluations, noise_std):
+    def step(self, epoch, theta_id, min_evaluations, noise_std):
         """
         Perform one training step. This means one parameter update.
             1. store the current solution in the object store
@@ -88,6 +89,7 @@ class Trainer:
             # EVALUATE
             score, _, _ = results[0]
             log(f"Currrent solution score: {np.mean(score)}", self.logfile)
+            wandb.log({"dual integral": np.mean(score)})
             # print("currrent solution score: ", np.mean(score))
             # we want to maximize the score
             if np.mean(score) > self.best_score:

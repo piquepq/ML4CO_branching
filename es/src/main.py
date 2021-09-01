@@ -2,6 +2,7 @@ import os
 import sys
 import ray
 import glob
+import wandb
 import argparse
 
 from bc.utilities import log
@@ -53,6 +54,9 @@ if __name__ == "__main__":
     log(f"min_evaluations: {MIN_EVAL}", logfile)
     log(f"noise_std: {NOISE_STD}", logfile)
     log(f"seed {SEED}", logfile)
+
+    # initialize wandb
+    wandb.init(project='ml4co-dual-es', entity='ml4co')
 
     ray.init()
     trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=SEED, num_workers=NUM_WORKER,

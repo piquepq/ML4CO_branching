@@ -123,15 +123,15 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # hyper parameters
-    max_epochs = 1
-    batch_size = 4
-    pretrain_batch_size = 8
-    valid_batch_size = 8
-    lr = 1e-3
+    max_epochs = 1000
+    batch_size = 12  # large batch size will run out of GPU memory
+    pretrain_batch_size = 128
+    valid_batch_size = 128
+    lr = 2e-4
     top_k = [1, 3, 5, 10]
 
     # initialize wandb
-    wandb.init(project='ml4co-dual', entity='ml4co')
+    wandb.init(project='ml4co-dual-bc', entity='ml4co')
     wandb.config.max_epochs = max_epochs
     wandb.config.batch_size = batch_size
     wandb.config.pretrain_batch_size = pretrain_batch_size
@@ -240,9 +240,9 @@ if __name__ == "__main__":
         if scheduler.num_bad_epochs == 0:
             torch.save(policy.state_dict(), pathlib.Path(running_dir)/'best_params.pkl')
             log(f"  best model so far", logfile)
-        elif scheduler.num_bad_epochs == 10:
+        elif scheduler.num_bad_epochs == 100:
             log(f"  10 epochs without improvement, decreasing learning rate", logfile)
-        elif scheduler.num_bad_epochs == 20:
+        elif scheduler.num_bad_epochs == 200:
             log(f"  20 epochs without improvement, early stopping", logfile)
             break
 

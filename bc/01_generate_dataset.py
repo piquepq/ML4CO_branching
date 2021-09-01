@@ -312,6 +312,14 @@ if __name__ == '__main__':
         type=int,
         default=1,
     )
+
+    parser.add_argument(
+        '-w', '--where',
+        help='Where are instances? 0 for local machine, 1 for HPC.',
+        type=int,
+        default=0,
+    )
+
     args = parser.parse_args()
 
     print(f"seed {args.seed}")
@@ -319,8 +327,8 @@ if __name__ == '__main__':
     # parameters
     node_record_prob = 0.05  # probability of running the expert strategy and collecting samples.
     time_limit = 3600  # time limit for solving each instance
-    train_size = 100000  # number of samples of each type
-    valid_size = 20000
+    train_size = 10  # number of samples of each type
+    valid_size = 2
 
     # get instances
     if args.problem == 'item_placement':
@@ -341,11 +349,19 @@ if __name__ == '__main__':
     else:
         raise NotImplementedError
 
+
     # setup the path
-    DIR = os.path.dirname(os.path.dirname(__file__))
-    instances_train_path = os.path.join(DIR, instances_train_path)
-    instances_valid_path = os.path.join(DIR, instances_valid_path)
-    out_dir = os.path.join(DIR, out_dir)
+    if args.where == 0:
+        DIR = os.path.dirname(os.path.dirname(__file__))
+        instances_train_path = os.path.join(DIR, instances_train_path)
+        instances_valid_path = os.path.join(DIR, instances_valid_path)
+        out_dir = os.path.join(DIR, out_dir)
+    else:
+        DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))  # rigel
+        store_path = '/seasdean/projects/ml4co'
+        instances_train_path = os.path.join(DIR, store_path, instances_train_path)
+        instances_valid_path = os.path.join(DIR, store_path, instances_valid_path)
+
     instances_train = glob.glob(instances_train_path)
     instances_valid = glob.glob(instances_valid_path)
 
