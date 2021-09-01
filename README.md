@@ -64,6 +64,7 @@ source init.sh
 Optional arguments:
 `-s SEED`: random seed used to initialize the pseudo-random number generator
 `-j NJOBS`: number of parallel sample-generation jobs.
+`-w WHERE`: where you run the code, 0 for local machine, 1 for HPC.
 
 
 #### Behavior cloning
