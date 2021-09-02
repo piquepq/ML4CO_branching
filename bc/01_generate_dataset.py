@@ -16,6 +16,9 @@ from pathlib import Path
 sys.path.append('..')
 from common.environments import Branching as Environment
 
+# import config
+from bc.config.config import NODE_RECORD_PROB, TIME_LIMIT, TRAIN_SIZE, VALID_SIZE
+
 
 class ExploreThenStrongBranch:
     """
@@ -294,18 +297,25 @@ def collect_samples(instances, out_dir, rng, n_samples, n_jobs, query_expert_pro
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser = argparse.ArgumentParser()
     parser.add_argument(
         'problem',
         help='MILP instance type to process.',
         choices=['item_placement', 'load_balancing', 'anonymous'],
     )
+
+    parser.add_argument(
+        '-w', '--where',
+        help='Where are instances? 0 for local machine, 1 for HPC.',
+        type=int,
+    )
+
     parser.add_argument(
         '-s', '--seed',
         help='Random generator seed.',
         type=int,
         default=0,
     )
+
     parser.add_argument(
         '-j', '--njobs',
         help='Number of parallel jobs.',
@@ -313,22 +323,15 @@ if __name__ == '__main__':
         default=1,
     )
 
-    parser.add_argument(
-        '-w', '--where',
-        help='Where are instances? 0 for local machine, 1 for HPC.',
-        type=int,
-        default=0,
-    )
-
     args = parser.parse_args()
 
     print(f"seed {args.seed}")
 
     # parameters
-    node_record_prob = 0.05  # probability of running the expert strategy and collecting samples.
-    time_limit = 3600  # time limit for solving each instance
-    train_size = 10  # number of samples of each type
-    valid_size = 2
+    node_record_prob = NODE_RECORD_PROB  # probability of running the expert strategy and collecting samples.
+    time_limit = TIME_LIMIT  # time limit for solving each instance
+    train_size = TRAIN_SIZE  # number of samples for training
+    valid_size = VALID_SIZE  # number of samples for validation
 
     # get instances
     if args.problem == 'item_placement':

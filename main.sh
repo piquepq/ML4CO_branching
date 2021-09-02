@@ -1,20 +1,20 @@
-
-
-
-export SINGULARITY_HOME=`realpath $PWD`
-export SINGULARITY_BIND="$(mktemp -d):/tmp,$(mktemp -d):/var/tmp"
-export SINGULARITY_BIND="${SINGULARITY_BIND},$(realpath instances):$SINGULARITY_HOME/instances:ro"
-export SINGULARITY_BIND="${SINGULARITY_BIND},$(realpath bc):$SINGULARITY_HOME/bc:ro"
-export SINGULARITY_BIND="${SINGULARITY_BIND},$(realpath es):$SINGULARITY_HOME/es:ro"
-export SINGULARITY_CLEANENV=1
-export SINGULARITY_CONTAINALL=1
-export SINGULARITY_NV=1
-export SINGULARITY_NETWORK=none
-
+#!/bin/sh
 #
-COMMANDS="source /opt/mamba/init.bash; conda activate ml4co; python bc/01_generate_dataset.py item_placement"
-sudo singularity exec --net singularity/base.sif bash -i -c "$COMMANDS"
+# Replace <ACCOUNT> with your account name before submitting.
+#
+#SBATCH --account=seasdean	# The account name for the job.
+#SBATCH --job-name=init_ml4co    # The job name.
+#SBATCH -c 1                     # The number of cpu cores to use.
+#SBATCH --time=20:00              # The time the job will take to run (here, 1 $
+#SBATCH --mem-per-cpu=1gb        # The memory the job will use per cpu core.
 
 
 
+# generate data samples
+source singularity/02generate_data.sh item_placement -w 0
 
+# behavior cloning
+source singularity/03behavior_cloning.sh item_placement -g -1
+
+# evolutionary strategy
+source singularity/04evolutionary_strategy.sh item_placement

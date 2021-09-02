@@ -55,7 +55,7 @@ tar -xzf instances.tar.gz
 
 #### Set-up your Python dependencies
 ```bash
-source init.sh
+source env.sh
 ```
 
 ## Instruction for running the code

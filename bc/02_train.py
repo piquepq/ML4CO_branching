@@ -6,6 +6,9 @@ import pathlib
 import numpy as np
 import wandb
 
+# import config
+from bc.config.config import MAX_EPOCHS, BATCH_SIZE, PRETRAIN_BATCH_SIZE, VALID_BATCH_SIZE, LEARN_RATE, TOP_K
+
 
 def pretrain(policy, pretrain_loader):
     """
@@ -123,12 +126,12 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # hyper parameters
-    max_epochs = 1000
-    batch_size = 12  # large batch size will run out of GPU memory
-    pretrain_batch_size = 128
-    valid_batch_size = 128
-    lr = 2e-4
-    top_k = [1, 3, 5, 10]
+    max_epochs = MAX_EPOCHS
+    batch_size = BATCH_SIZE  # large batch size will run out of GPU memory
+    pretrain_batch_size = PRETRAIN_BATCH_SIZE
+    valid_batch_size = VALID_BATCH_SIZE
+    lr = LEARN_RATE
+    top_k = TOP_K
 
     # initialize wandb
     wandb.init(project='ml4co-dual-bc', entity='ml4co')
