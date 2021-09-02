@@ -10,7 +10,7 @@
 
 # module load
 module load anaconda/3-2019.03
-
+conda init bash
 
 
 # remove any previous environment
