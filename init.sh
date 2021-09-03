@@ -15,5 +15,6 @@
 
 # initialize the environment
 cd ~/ml4co_dual_task
+module load singularity
 source singularity/01env_init.sh
 
