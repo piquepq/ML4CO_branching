@@ -1,4 +1,5 @@
 # sample generation config
+N_JOBS = 24  # number of parallel jobs
 NODE_RECORD_PROB = 0.05  # probability of running the expert strategy and collecting samples.
 TIME_LIMIT = 3600  # time limit for solving each instance
 TRAIN_SIZE = 1000  # number of samples for training. I recommend set it as 100000

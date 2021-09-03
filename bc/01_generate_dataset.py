@@ -17,7 +17,7 @@ sys.path.append('..')
 from common.environments import Branching as Environment
 
 # import config
-from bc.config.config import NODE_RECORD_PROB, TIME_LIMIT, TRAIN_SIZE, VALID_SIZE
+from bc.config.config import NODE_RECORD_PROB, TIME_LIMIT, TRAIN_SIZE, VALID_SIZE, N_JOBS
 
 
 class ExploreThenStrongBranch:
@@ -310,13 +310,6 @@ if __name__ == '__main__':
         default=0,
     )
 
-    parser.add_argument(
-        '-j', '--njobs',
-        help='Number of parallel jobs.',
-        type=int,
-        default=1,
-    )
-
     args = parser.parse_args()
 
     print(f"seed {args.seed}")
@@ -365,11 +358,11 @@ if __name__ == '__main__':
     # generate train samples
     rng = np.random.RandomState(args.seed + 100)
     collect_samples(instances_train, out_dir + '/train', rng, train_size,
-                    args.njobs, query_expert_prob=node_record_prob,
+                    N_JOBS, query_expert_prob=node_record_prob,
                     time_limit=time_limit)
 
     # generate validation samples
     rng = np.random.RandomState(args.seed + 1)
     collect_samples(instances_valid, out_dir + '/valid', rng, valid_size,
-                    args.njobs, query_expert_prob=node_record_prob,
+                    N_JOBS, query_expert_prob=node_record_prob,
                     time_limit=time_limit)

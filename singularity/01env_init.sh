@@ -2,8 +2,8 @@
 
 # pull the prebuilt image
 cd singularity
-singularity pull library://columbia_combinators/default/columbia_combinators:latest
-mv columbia_combinators_latest.sif base.sif
+singularity pull -U library://columbia_combinators/default/columbia_combinators:signed
+mv columbia_combinators_signed.sif base.sif
 cd ..
 
 # set environment variables
