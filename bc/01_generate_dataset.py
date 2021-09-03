@@ -304,12 +304,6 @@ if __name__ == '__main__':
     )
 
     parser.add_argument(
-        '-w', '--where',
-        help='Where are instances? 0 for local machine, 1 for HPC.',
-        type=int,
-    )
-
-    parser.add_argument(
         '-s', '--seed',
         help='Random generator seed.',
         type=int,
@@ -354,16 +348,10 @@ if __name__ == '__main__':
 
 
     # setup the path
-    if args.where == 0:
-        DIR = os.path.dirname(os.path.dirname(__file__))
-        instances_train_path = os.path.join(DIR, instances_train_path)
-        instances_valid_path = os.path.join(DIR, instances_valid_path)
-        out_dir = os.path.join(DIR, out_dir)
-    else:
-        DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(os.path.dirname(__file__)))))  # rigel
-        store_path = '/seasdean/projects/ml4co'
-        instances_train_path = os.path.join(DIR, store_path, instances_train_path)
-        instances_valid_path = os.path.join(DIR, store_path, instances_valid_path)
+    DIR = os.path.dirname(os.path.dirname(__file__))
+    instances_train_path = os.path.join(DIR, instances_train_path)
+    instances_valid_path = os.path.join(DIR, instances_valid_path)
+    out_dir = os.path.join(DIR, out_dir)
 
     instances_train = glob.glob(instances_train_path)
     instances_valid = glob.glob(instances_valid_path)

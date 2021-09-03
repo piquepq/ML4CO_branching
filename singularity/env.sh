@@ -15,7 +15,7 @@ conda install -y pytorch==1.9.0 torchvision torchaudio cudatoolkit=10.2 -c pytor
 conda install -y pytorch-geometric -c rusty1s -c conda-forge
 
 # install ray
-pip install -y "ray[default]"
+pip install "ray[default]"
 
 # install package
 pip install -e .
