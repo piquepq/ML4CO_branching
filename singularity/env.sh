@@ -18,6 +18,6 @@ conda install pytorch-geometric -c rusty1s -c conda-forge
 pip install "ray[default]"
 
 # install package
-python setup.py install
+pip install -e .
 
 
