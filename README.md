@@ -8,40 +8,7 @@ Training is done through imitation learning and evolution strategy.
 The training process has three steps: sample generation, behavior cloning(bc), and evolution strategy(es).
 
 
-## Set up env for MacOS user
-####  Clone this repository
-```bash
-git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
-cd ml4co_dual_task
-```
-Download the training instances [here](https://drive.google.com/file/d/1MytdY3IwX_aFRWdoc0mMfDN9Xg1EKUuq/view), and extract the archive at the root of this repo
-```bash
-tar -xzf instances.tar.gz
-```
-
-#### Set-up your Python dependencies
-```bash
-conda env create -n ml4co -f simple_env.yml
-conda activate ml4co
-```
-
-#### Install pytorch and pytorch geometric (only CPU)
-```bash
-conda install pytorch torchvision torchaudio -c pytorch
-conda install pytorch-geometric -c rusty1s -c conda-forge
-```
-
-#### Install ray for parrallel computation
-```bash
-pip install "ray[default]"
-```
-
-#### Install packages
-```bash
-pip install -e .
-```
-
-## Set up env for Linux User
+## Set up the env on local machine
 ####  Clone this repository
 ```bash
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
@@ -55,30 +22,56 @@ tar -xzf instances.tar.gz
 
 #### Set-up your Python dependencies
 ```bash
-source env.sh
+source init.sh
+```
+
+
+## Set up the env on Habanero
+####  Transfer the file
+You need to transfer instances.tar.gz from your local machine to Habanero. 
+Find the instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Habanero+-+Working+on+Habanero#HabaneroWorkingonHabanero-TransferringFiles).
+ATTENTION: you account only have 10 GB storage, so you need to put it in the seasdean shared file.
+Use the command below to transfer the file:
+```bash
+scp MyDataFile <UNI>@habaxfer.rcs.columbia.edu:/seasdean/projects/ml4co
+```
+(Log in your account AFTER transferring)
+
+####  Clone this repository
+```bash
+git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
+```
+
+####  Initialize the env
+```bash
+cd ~/ml4co_dual_task
+sbatch init.sh
+```
+Use the command below to check whether the initialization succeeds:
+```bash
+scontrol show job [job ID]
 ```
 
 ## Instruction for running the code
-#### Generate sample
-`python bc/01_generate_dataset.py BENCHMARK`
-Optional arguments:
-`-s SEED`: random seed used to initialize the pseudo-random number generator
-`-j NJOBS`: number of parallel sample-generation jobs.
-`-w WHERE`: where you run the code, 0 for local machine, 1 for HPC.
+ATTENTION: revise the 01_generate.sh, 02_bc.sh, 03_es.sh to decide
+how many CPU, GPU, memory you need and the running time.
+See instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Habanero+-+Submitting+Jobs).
 
+#### Generate sample
+```bash
+sbatch 01_generate.sh BENCHMARK
+```
 
 #### Behavior cloning
-`python bc/02_train.py BENCHMARK`
-`-s SEED`: random seed used to initialize the pseudo-random number generator
-`-g GPU`: CUDA GPU id (or -1 for CPU only)
-When training, the file `bc/trained_models/$BENCHMARK/best_params.pkl` will be generated.
-
+```bash
+sbatch 02_bc.sh BENCHMARK
+```
 
 #### Evolution strategy
-`python es/src/main.py BENCHMARK`
-
+```bash
+sbatch 03_es.sh BENCHMARK
+```
 
 #### Evaluate
-To evaluate the results, copy the trained models (`bc/trained_models/$BENCHMARK/best_params.pkl`) into the `agents` directory, which imitates the final submission format. 
 Follow the evaluation pipeline instructions to evaluate the generated parameters.
 

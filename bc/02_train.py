@@ -7,7 +7,7 @@ import numpy as np
 import wandb
 
 # import config
-from bc.config.config import MAX_EPOCHS, BATCH_SIZE, PRETRAIN_BATCH_SIZE, VALID_BATCH_SIZE, LEARN_RATE, TOP_K
+from bc.config.config import MAX_EPOCHS, EPOCH_SIZE, BATCH_SIZE, PRETRAIN_BATCH_SIZE, VALID_BATCH_SIZE, LEARN_RATE, TOP_K
 
 
 def pretrain(policy, pretrain_loader):
@@ -136,6 +136,7 @@ if __name__ == "__main__":
     # initialize wandb
     wandb.init(project='ml4co-dual-bc', entity='ml4co')
     wandb.config.max_epochs = max_epochs
+    wandb.epoch_size = EPOCH_SIZE
     wandb.config.batch_size = batch_size
     wandb.config.pretrain_batch_size = pretrain_batch_size
     wandb.config.valid_batch_size = valid_batch_size
@@ -201,6 +202,7 @@ if __name__ == "__main__":
         os.remove(logfile)
 
     log(f"max_epochs: {max_epochs}", logfile)
+    log(f"epoch_size: {EPOCH_SIZE}", logfile)
     log(f"batch_size: {batch_size}", logfile)
     log(f"pretrain_batch_size: {pretrain_batch_size}", logfile)
     log(f"valid_batch_size : {valid_batch_size }", logfile)
@@ -227,7 +229,7 @@ if __name__ == "__main__":
             n = pretrain(policy, pretrain_loader)
             log(f"PRETRAINED {n} LAYERS", logfile)
         else:
-            epoch_train_files = rng.choice(train_files, int(np.floor(10000/batch_size))*batch_size, replace=True)
+            epoch_train_files = rng.choice(train_files, int(np.floor(EPOCH_SIZE/batch_size))*batch_size, replace=True)
             train_data = GraphDataset(epoch_train_files)
             train_loader = torch_geometric.data.DataLoader(train_data, batch_size, shuffle=True)
             train_loss, train_kacc = process(policy, train_loader, top_k, optimizer)
@@ -243,10 +245,10 @@ if __name__ == "__main__":
         if scheduler.num_bad_epochs == 0:
             torch.save(policy.state_dict(), pathlib.Path(running_dir)/'best_params.pkl')
             log(f"  best model so far", logfile)
-        elif scheduler.num_bad_epochs == 100:
-            log(f"  10 epochs without improvement, decreasing learning rate", logfile)
-        elif scheduler.num_bad_epochs == 200:
-            log(f"  20 epochs without improvement, early stopping", logfile)
+        elif scheduler.num_bad_epochs == 30:
+            log(f"  30 epochs without improvement, decreasing learning rate", logfile)
+        elif scheduler.num_bad_epochs == 60:
+            log(f"  60 epochs without improvement, early stopping", logfile)
             break
 
     # load best parameters and run a final validation step
