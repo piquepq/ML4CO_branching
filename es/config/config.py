@@ -9,7 +9,7 @@ NUM_WORKER = 2  # (originally 24)
 STEP_SIZE = 1e-4
 
 SEED = 1
-EPOCHS = 2  # (originally 20)
+EPOCHS = 5  # (originally 20)
 MIN_EVAL = 4  # (originally 1150)
 NOISE_STD = 0.1
 
