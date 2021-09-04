@@ -23,23 +23,23 @@ if __name__ == "__main__":
     # best parameters path
     if args.problem == 'item_placement':
         policy_path = 'bc/trained_models/item_placement/best_params.pkl'
-        instances_path = 'instances/1_item_placement/valid/*.mps.gz'
+        instances_path = '/instances/1_item_placement/valid/*.mps.gz'
 
     elif args.problem == 'load_balancing':
         policy_path = 'bc/trained_models/load_balancing/best_params.pkl'
-        instances_path = 'instances/2_load_balancing/valid/*.mps.gz'
+        instances_path = '/instances/2_load_balancing/valid/*.mps.gz'
 
     elif args.problem == 'anonymous':
         policy_path = 'bc/trained_models/anonymous/best_params.pkl'
-        instances_path = 'instances/3_anonymous/valid/*.mps.gz'
+        instances_path = '/instances/3_anonymous/valid/*.mps.gz'
 
     else:
         raise NotImplementedError
 
     # set content root path
-    DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
-    policy_path = os.path.join(DIR, policy_path)
-    instances_path = os.path.join(DIR, instances_path)
+    # DIR = os.path.dirname(os.path.dirname(os.path.dirname(__file__)))
+    # policy_path = os.path.join(DIR, policy_path)
+    # instances_path = os.path.join(DIR, instances_path)
     instances_valid = glob.glob(instances_path)
 
     # set up log

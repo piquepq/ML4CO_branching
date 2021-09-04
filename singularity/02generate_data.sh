@@ -21,9 +21,12 @@ export SINGULARITY_CONTAINALL=1
 export SINGULARITY_NV=1
 export SINGULARITY_NETWORK=none
 
-# bind
-singularity exec --bind /rigel/seasdean/projects/ml4co/instances:/instances singularity/base.sif
+# set directory for instances
+cd /rigel/seasdean/projects/ml4co/instances
+export INSTANCES_PATH="$PWD"
+cd ~/ml4co_dual_task
+
 
 # generate samples
 COMMANDS="source /opt/mamba/init.bash; conda activate ml4co; python bc/01_generate_dataset.py $1"
-singularity exec --net singularity/base.sif bash -i -c "$COMMANDS"
+singularity exec --bind $INSTANCES_PATH:/instances singularity/base.sif bash -i -c "$COMMANDS"
