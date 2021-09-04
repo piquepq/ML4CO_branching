@@ -62,12 +62,6 @@ See instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Ha
 sbatch 01_generate.sh BENCHMARK
 ```
 
-#### Wandb login
-Log in your wandb account before training.
-```bash
-wandb login
-```
-
 #### Behavior cloning
 ```bash
 sbatch 02_bc.sh BENCHMARK
@@ -87,6 +81,21 @@ When the job is completed, sync the training performance.
 wandb sync YOUR_RUN_DIRECTORY
 ```
 
+#### Visualize the training 
+You can zip the wandb records and download it to your local machine
+```bash
+cd ~/ml4co_dual_task
+zip wandb.zip wandb
+```
+Open another terminal without connecting with habanero and use scp to download files:
+```bash
+scp <UNI>@habanero.rcs.columbia.edu:~/ml4co_dual_task/wandb.zip <destination>
+```
+
+Unzip the wandb.zip and use wandb sync to upload the training performance
+```bash
+wandb sync [PATH]
+```
 #### Evaluate
 Follow the evaluation pipeline instructions to evaluate the generated parameters.
 

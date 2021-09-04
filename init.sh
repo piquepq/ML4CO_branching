@@ -13,10 +13,6 @@
  cd /rigel/seasdean/projects/ml4co
  tar -xzf instances.tar.gz
 
-# install wandb
-module load anaconda
-conda install wandb
-
 # initialize the environment
 cd ~/ml4co_dual_task
 module load singularity
