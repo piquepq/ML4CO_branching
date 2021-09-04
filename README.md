@@ -65,8 +65,6 @@ sbatch 01_generate.sh BENCHMARK
 #### Wandb login
 Log in your wandb account before training.
 ```bash
-module load anaconda
-conda install wandb
 wandb login
 ```
 
