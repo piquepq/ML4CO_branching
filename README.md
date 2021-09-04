@@ -62,14 +62,31 @@ See instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Ha
 sbatch 01_generate.sh BENCHMARK
 ```
 
+#### Wandb login
+Log in your wandb account before training.
+```bash
+module load anaconda
+conda install wandb
+wandb login
+```
+
 #### Behavior cloning
 ```bash
 sbatch 02_bc.sh BENCHMARK
+```
+When the job is completed, use the command below to sync the training performance.
+You can find YOUR_RUN_DIRECTORY at the last line of slurm output.
+```bash
+wandb sync YOUR_RUN_DIRECTORY
 ```
 
 #### Evolution strategy
 ```bash
 sbatch 03_es.sh BENCHMARK
+```
+When the job is completed, sync the training performance.
+```bash
+wandb sync YOUR_RUN_DIRECTORY
 ```
 
 #### Evaluate

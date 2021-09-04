@@ -134,7 +134,7 @@ if __name__ == "__main__":
     top_k = TOP_K
 
     # initialize wandb
-    wandb.init(project='ml4co-dual-bc', entity='ml4co')
+    wandb.init(project='ml4co-dual-bc', entity='ml4co', mode="offline")
     wandb.config.max_epochs = max_epochs
     wandb.epoch_size = EPOCH_SIZE
     wandb.config.batch_size = batch_size

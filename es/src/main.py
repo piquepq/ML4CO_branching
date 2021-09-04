@@ -56,7 +56,7 @@ if __name__ == "__main__":
     log(f"seed {SEED}", logfile)
 
     # initialize wandb
-    wandb.init(project='ml4co-dual-es', entity='ml4co')
+    wandb.init(project='ml4co-dual-es', entity='ml4co', mode="offline")
 
     ray.init()
     trainer = Trainer(Policy=Policy, policy_path=policy_path, instances=instances_valid, seed=SEED, num_workers=NUM_WORKER,
