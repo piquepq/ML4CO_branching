@@ -33,12 +33,14 @@ Find the instruction [here](https://confluence.columbia.edu/confluence/display/r
 ATTENTION: you account only have 10 GB storage, so you need to put it in the seasdean shared file.
 Use the command below to transfer the file:
 ```bash
-scp MyDataFile <UNI>@habaxfer.rcs.columbia.edu:/rigel/seasdean/projects/ml4co
+scp instances.tar.gz <UNI>@habaxfer.rcs.columbia.edu:/rigel/seasdean/projects/ml4co
 ```
+This command automatically creates a folder called ml4co in /rigel/seasdean/projects/ with instances.tar.gz. 
 (Log in your account AFTER transferring)
 
-####  Clone this repository
+####  Clone this repository in your home directory on Habanero
 ```bash
+cd ~
 git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 ```
 
@@ -47,9 +49,11 @@ git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 cd ~/ml4co_dual_task
 sbatch init.sh
 ```
+If this command is successful you will see a message that says: "Submitted batch job 'Job ID' ".
+
 Use the command below to check whether the initialization succeeds:
 ```bash
-scontrol show job [job ID]
+scontrol show job <Job ID>
 ```
 
 ## Instruction for running the code
@@ -61,7 +65,12 @@ See instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Ha
 ```bash
 sbatch 01_generate.sh BENCHMARK
 ```
-
+To determine if the job is completed you can run:
+```bash
+scontrol show job <Job ID>
+```
+Check "JobState = " to determine if it's still RUNNING or COMPLETED. 
+  
 #### Behavior cloning
 ```bash
 sbatch 02_bc.sh BENCHMARK
