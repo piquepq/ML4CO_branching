@@ -49,7 +49,7 @@ git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 cd ~/ml4co_dual_task
 sbatch init.sh
 ```
-If this command is successful you will see a message that says: "Submitted batch job <Job ID>".
+If this command is successful you will see a message that says: "Submitted batch job 'Job ID' ".
 
 Use the command below to check whether the initialization succeeds:
 ```bash
