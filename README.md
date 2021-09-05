@@ -65,7 +65,12 @@ See instruction [here](https://confluence.columbia.edu/confluence/display/rcs/Ha
 ```bash
 sbatch 01_generate.sh BENCHMARK
 ```
-
+To determine if the job is completed you can run:
+```bash
+scontrol show job <Job ID>
+```
+Check "JobState = " to determine if it's still RUNNING or COMPLETED. 
+  
 #### Behavior cloning
 ```bash
 sbatch 02_bc.sh BENCHMARK
