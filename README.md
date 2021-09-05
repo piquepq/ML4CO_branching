@@ -33,7 +33,7 @@ Find the instruction [here](https://confluence.columbia.edu/confluence/display/r
 ATTENTION: you account only have 10 GB storage, so you need to put it in the seasdean shared file.
 Use the command below to transfer the file:
 ```bash
-scp MyDataFile <UNI>@habaxfer.rcs.columbia.edu:/seasdean/projects/ml4co
+scp MyDataFile <UNI>@habaxfer.rcs.columbia.edu:/rigel/seasdean/projects/ml4co
 ```
 (Log in your account AFTER transferring)
 
