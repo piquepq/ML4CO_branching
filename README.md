@@ -85,7 +85,7 @@ wandb sync YOUR_RUN_DIRECTORY
 You can zip the wandb records and download it to your local machine
 ```bash
 cd ~/ml4co_dual_task
-zip wandb.zip wandb
+zip -r wandb.zip wandb
 ```
 Open another terminal without connecting with habanero and use scp to download files:
 ```bash
