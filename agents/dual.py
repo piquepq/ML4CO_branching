@@ -23,7 +23,7 @@ class Policy():
         params_path = f'agents/trained_models/{problem}/best_params.pkl'
 
         # set up policy
-        self.device = f"cuda:0"
+        self.device = "cpu"
         self.policy = GNNPolicy().to(self.device)
         self.policy.load_state_dict(torch.load(params_path))
 
