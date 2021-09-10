@@ -88,11 +88,11 @@ class Trainer:
 
             # EVALUATE
             score, _, _ = results[0]
-            log(f"Currrent solution score: {np.mean(score)}", self.logfile)
-            wandb.log({"dual integral": np.mean(score)})
+            log(f"Currrent solution score: {- np.mean(score)}", self.logfile)
+            wandb.log({"dual integral": - np.mean(score)})
             # print("currrent solution score: ", np.mean(score))
-            # we want to maximize the score
-            if np.mean(score) > self.best_score:
+            # we want to minimize the score
+            if np.mean(score) < self.best_score:
                 log(f"  best model so far", self.logfile)
                 self.best_score = np.mean(score)
                 self.solution.save(path=self.solution_path, verbose=True)

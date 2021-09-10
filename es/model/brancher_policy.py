@@ -283,7 +283,7 @@ class BrancherPolicy(Solution):
             cumulated_reward += reward
 
         # print(f"  cumulated reward (to be maximized): {cumulated_reward}")
-        score = cumulated_reward
+        score = - cumulated_reward  # we want to minimize the score
         episodes = 1
         transitions = 1
         return score, episodes, transitions
