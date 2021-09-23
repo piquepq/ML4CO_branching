@@ -215,8 +215,8 @@ if __name__ == "__main__":
     # data setup
     valid_data = GraphDataset(valid_files)
     pretrain_data = GraphDataset(pretrain_files)
-    valid_loader = torch_geometric.loader.DataLoader(valid_data, valid_batch_size, shuffle=False)
-    pretrain_loader = torch_geometric.loader.DataLoader(pretrain_data, pretrain_batch_size, shuffle=False)
+    valid_loader = torch_geometric.data.DataLoader(valid_data, valid_batch_size, shuffle=False)
+    pretrain_loader = torch_geometric.data.DataLoader(pretrain_data, pretrain_batch_size, shuffle=False)
 
 
     policy = GNNPolicy().to(device)
