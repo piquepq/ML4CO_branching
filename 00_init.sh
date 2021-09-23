@@ -10,8 +10,8 @@
 
 
 # transfer instances to seasdean shared file and unzip it
- cd /rigel/seasdean/projects/ml4co
- tar -xzf instances.tar.gz
+# cd /rigel/seasdean/projects/ml4co
+# tar -xzf instances.tar.gz
 
 # initialize the environment
 cd ~/ml4co_dual_task
