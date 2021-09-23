@@ -15,11 +15,16 @@ then
 fi
 
 export SINGULARITY_HOME=`realpath $PWD`
-export SINGULARITY_BIND="$(mktemp -d):/tmp,$(mktemp -d):/var/tmp"
+# export SINGULARITY_BIND="$(mktemp -d):/tmp,$(mktemp -d):/var/tmp"
 export SINGULARITY_CLEANENV=1
 export SINGULARITY_CONTAINALL=1
 export SINGULARITY_NV=1
 export SINGULARITY_NETWORK=none
 
+# set directory for instances
+cd /rigel/seasdean/projects/ml4co/instances
+export INSTANCES_PATH="$PWD"
+cd ~/ml4co_dual_task
+
 COMMANDS="source /opt/mamba/init.bash; conda activate ml4co; python bc/02_train.py $@"
-singularity exec --net singularity/base.sif bash -i -c "$COMMANDS"
+singularity exec --bind $INSTANCES_PATH:/instances singularity/base.sif bash -i -c "$COMMANDS"

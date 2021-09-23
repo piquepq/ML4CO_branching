@@ -324,17 +324,17 @@ if __name__ == '__main__':
     if args.problem == 'item_placement':
         instances_train_path = '/instances/1_item_placement/train/*.mps.gz'
         instances_valid_path = '/instances/1_item_placement/valid/*.mps.gz'
-        out_dir = 'bc/samples/1_item_placement'
+        out_dir = '/instances/samples/1_item_placement'
 
     elif args.problem == 'load_balancing':
         instances_train_path = '/instances/2_load_balancing/train/*.mps.gz'
         instances_valid_path = '/instances/2_load_balancing/valid/*.mps.gz'
-        out_dir = 'bc/samples/2_load_balancing'
+        out_dir = '/instances/samples/2_load_balancing'
 
     elif args.problem == 'anonymous':
         instances_train_path = '/instances/3_anonymous/train/*.mps.gz'
         instances_valid_path = '/instances/3_anonymous/valid/*.mps.gz'
-        out_dir = 'bc/samples/3_anonymous'
+        out_dir = '/instances/samples/3_anonymous'
 
     else:
         raise NotImplementedError

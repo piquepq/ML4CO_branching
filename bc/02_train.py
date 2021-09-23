@@ -145,18 +145,18 @@ if __name__ == "__main__":
 
     # get sample directory
     if args.problem == 'item_placement':
-        train_files_path = 'bc/samples/1_item_placement/train/sample_*.pkl'
-        valid_files_path = 'bc/samples/1_item_placement/valid/sample_*.pkl'
+        train_files_path = '/instances/samples/1_item_placement/train/sample_*.pkl'
+        valid_files_path = '/instances/samples/1_item_placement/valid/sample_*.pkl'
         running_dir = 'bc/trained_models/item_placement'
 
     elif args.problem == 'load_balancing':
-        train_files_path = 'bc/samples/2_load_balancing/train/sample_*.pkl'
-        valid_files_path = 'bc/samples/2_load_balancing/valid/sample_*.pkl'
+        train_files_path = '/instances/samples/2_load_balancing/train/sample_*.pkl'
+        valid_files_path = '/instances/samples/2_load_balancing/valid/sample_*.pkl'
         running_dir = 'bc/trained_models/load_balancing'
 
     elif args.problem == 'anonymous':
-        train_files_path = 'bc/samples/3_anonymous/train/sample_*.pkl'
-        valid_files_path = 'bc/samples/3_anonymous/valid/sample_*.pkl'
+        train_files_path = '/instances/samples/3_anonymous/train/sample_*.pkl'
+        valid_files_path = '/instances/samples/3_anonymous/valid/sample_*.pkl'
         running_dir = 'bc/trained_models/anonymous'
 
     else:
