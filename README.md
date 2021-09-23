@@ -22,7 +22,7 @@ tar -xzf instances.tar.gz
 
 #### Set-up your Python dependencies
 ```bash
-source init.sh
+source 00_init.sh
 ```
 
 
@@ -47,7 +47,7 @@ git clone https://github.com/LoganZhao1997/ml4co_dual_task.git
 ####  Initialize the env
 ```bash
 cd ~/ml4co_dual_task
-sbatch init.sh
+sbatch 00_init.sh
 ```
 If this command is successful you will see a message that says: "Submitted batch job 'Job ID' ".
 
