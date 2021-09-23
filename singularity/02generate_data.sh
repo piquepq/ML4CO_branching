@@ -23,7 +23,6 @@ export SINGULARITY_NETWORK=none
 
 # set directory for instances
 cd /rigel/seasdean/projects/ml4co/instances
-mkdir samples
 export INSTANCES_PATH="$PWD"
 cd ~/ml4co_dual_task
 
