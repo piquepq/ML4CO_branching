@@ -13,7 +13,7 @@ conda activate ml4co
 conda install -y pytorch==1.9.0 torchvision torchaudio cudatoolkit=11.1 -c pytorch -c nvidia
 
 # install pytorch geometric
-conda install -y pytorch-geometric -c rusty1s -c conda-forge
+conda install -y pytorch-geometric==1.7.2 -c rusty1s -c conda-forge
 
 # install ray
 pip install "ray[default]"
