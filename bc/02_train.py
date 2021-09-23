@@ -163,10 +163,10 @@ if __name__ == "__main__":
         raise NotImplementedError
 
     # set up the dir
-    DIR = os.path.dirname(os.path.dirname(__file__))
-    train_files_path = os.path.join(DIR, train_files_path)
-    valid_files_path = os.path.join(DIR, valid_files_path)
-    running_dir = os.path.join(DIR, running_dir)
+    # DIR = os.path.dirname(os.path.dirname(__file__))
+    # train_files_path = os.path.join(DIR, train_files_path)
+    # valid_files_path = os.path.join(DIR, valid_files_path)
+    # running_dir = os.path.join(DIR, running_dir)
     train_files = glob.glob(train_files_path)
     valid_files = glob.glob(valid_files_path)
 
